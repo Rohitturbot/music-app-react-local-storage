@@ -9,7 +9,7 @@ const Search = ({ query, onSearch, searchAction }) => {
       <InputGroup>
         <FormControl
           type="text"
-          placeholder="Search song"
+          placeholder="Search for songs"
           value={query}
           onChange={(e) => {
             onSearch(e.target.value);

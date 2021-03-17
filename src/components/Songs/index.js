@@ -3,9 +3,9 @@ import Header from "../Header";
 import LoadingIndicatorRow from "../LoadingIndicatorRow";
 import NoResultsRow from "../NoResultsRow";
 import Search from "../Search";
+import useLocalStorage from "../../hooks/useLocalStorage";
 import { Card, CardGroup, Col, Row } from "react-bootstrap";
 import { isEmpty } from "lodash";
-import useLocalStorage from "../../hooks/useLocalStorage";
 
 const BASE_URL = "https://jsonplaceholder.typicode.com/";
 
@@ -76,7 +76,6 @@ const SongsWrapper = () => {
 
   useEffect(() => {
     const cachedAlbum = JSON.parse(localStorage.getItem("album"));
-    console.log("cachedAlbu", cachedAlbum);
     if (cachedAlbum) {
       setAlbums(cachedAlbum);
     } else {
@@ -90,7 +89,7 @@ const SongsWrapper = () => {
         })
         .catch((e) => console.log(e));
     }
-  }, [setItem, value]);
+  }, [setItem]);
 
   const onSearch = (value) => {
     setQuery(value);
@@ -106,7 +105,7 @@ const SongsWrapper = () => {
         setSongs(data);
       });
   };
-  console.log("setAlbums", albums);
+
   return (
     <Songs
       songs={songs}
