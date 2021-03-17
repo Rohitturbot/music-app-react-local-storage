@@ -12,15 +12,22 @@ const AddPlaylistItem = ({ onAddItem }) => {
   };
 
   const handleOnChange = (e) => {
+    // {
+    //   "albumId": 1,
+    //   "id": 32,
+    //   "title": "ad enim dignissimos voluptatem similique",
+    //   "url": "https://via.placeholder.com/600/c70a4d",
+    //   "thumbnailUrl": "https://via.placeholder.com/150/c70a4d"
+    // },
     e.preventDefault();
     setItem({
       id: uuidv4(),
-      name: e.target.value,
-      createdAt: Date.now(),
-      songs: [],
+      title: e.target.value,
+      url: "https://via.placeholder.com/600/c70a4d",
+      thumbnailUrl: "https://via.placeholder.com/150/c70a4d",
+      albumId: 1,
     });
   };
-
   return (
     <Accordion className="mt-4">
       <Card>
@@ -41,7 +48,7 @@ const AddPlaylistItem = ({ onAddItem }) => {
                     id="inlineFormInput"
                     placeholder="Enter playlist name"
                     onChange={handleOnChange}
-                    value={item ? item.name.value : ""}
+                    value={item ? item.title.value : ""}
                   />
                 </Col>
                 <Col xs="auto">

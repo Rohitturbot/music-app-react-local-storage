@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
+import AddPlaylistItem from "./AddPlaylistItem";
+import Icon from "../Icon";
 import Header from "../Header";
 import NoResultsRow from "../NoResultsRow";
-import { Col, ListGroup, Row } from "react-bootstrap";
-import { isEmpty } from "lodash";
-import useLocalStorage from "../../hooks/useLocalStorage";
-import AddPlaylistItem from "./AddPlaylistItem";
 import moment from "moment";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { Col, ListGroup, Row } from "react-bootstrap";
+import { deleteIconLight } from "../../constants/icon";
+import { isEmpty } from "lodash";
+import { Link } from "react-router-dom";
 
-const PlaylistItems = ({ playlistItems }) => {
+const PlaylistItems = ({ playlistItems, removeItem }) => {
   return (
     <>
       <Header headerTitle="Playlists" />
@@ -19,18 +22,31 @@ const PlaylistItems = ({ playlistItems }) => {
           <Col xs={12}>
             <ListGroup>
               {playlistItems.map((playlistItem) => {
-                console.log("playlistItem", playlistItem);
                 return (
                   <ListGroup.Item key={playlistItem.id}>
-                    <Row>
-                      <Col>{playlistItem.name}</Col>
-                      <Col xs="auto">
-                        Created at:{" "}
-                        {moment(playlistItem.createdAt, "x").format(
-                          "DD MMM YYYY hh:mm a"
-                        )}
-                      </Col>
-                    </Row>
+                    <Link
+                      to={`/playlist/${playlistItem.id}`}
+                      className="text-decoration-none"
+                    >
+                      <Row>
+                        <Col>{playlistItem.name}</Col>
+                        <Col xs="auto">
+                          Created at:{" "}
+                          {moment(playlistItem.createdAt, "x").format(
+                            "DD MMM YYYY hh:mm a"
+                          )}
+                        </Col>
+                        <Col xs="auto">
+                          <Icon
+                            icon={deleteIconLight}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              removeItem(playlistItem);
+                            }}
+                          />
+                        </Col>
+                      </Row>
+                    </Link>
                   </ListGroup.Item>
                 );
               })}
@@ -54,7 +70,11 @@ const PlaylistItemsWrapper = () => {
   };
 
   const removeItem = (itemToBeDeleted) => {
-    setPlaylistItems(playlistItems.filter((item) => itemToBeDeleted !== item));
+    const remainingPlaylists = playlistItems.filter(
+      (item) => itemToBeDeleted.id !== item.id
+    );
+    setPlaylistItems(remainingPlaylists);
+    setItem(remainingPlaylists);
   };
 
   useEffect(() => {

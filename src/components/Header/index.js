@@ -1,10 +1,10 @@
 import React from "react";
 
-const Header = ({ headerTitle = "Songs List" }) => {
+const Header = ({ headerTitle = "Songs List", alignment = "center" }) => {
   return (
-    <center>
+    <div className={`${alignment === "center" ? "text-center" : "text-left"}`}>
       <h1>{headerTitle}</h1>
-    </center>
+    </div>
   );
 };
 
