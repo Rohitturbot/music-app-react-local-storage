@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
 import AddPlaylistItem from "./AddSong";
 import Header from "../Header";
+import Icon from "../Icon";
+import InfoTooltip from "../InfoTooltip";
 import NoResultsRow from "../NoResultsRow";
-import moment from "moment";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { Button, Col, ListGroup, Row } from "react-bootstrap";
+import {
+  addIcon,
+  deleteIconLight,
+  musicIcon,
+  shuffleIcon,
+} from "../../constants/icon";
 import { isEmpty } from "lodash";
 import { useParams } from "react-router-dom";
-import SongsWrapper from "../Songs";
-import Icon from "../Icon";
-import { deleteIconLight } from "../../constants/icon";
-
-const BASE_URL = "https://jsonplaceholder.typicode.com/";
+import { BASE_URL } from "../../constants/general";
 
 const SongsList = ({ playlistSongs, albums = [], removeItem }) => {
   return (
@@ -25,6 +28,14 @@ const SongsList = ({ playlistSongs, albums = [], removeItem }) => {
         <Row className="mt-4">
           <Col xs={12}>
             <ListGroup>
+              <ListGroup.Item className="header">
+                <Row>
+                  <Col className="col-auto pr-0">
+                    <Icon icon={musicIcon} fixedWidth={true} />
+                  </Col>
+                  <Col>Songs</Col>
+                </Row>
+              </ListGroup.Item>
               {playlistSongs.map((song) => {
                 const albumOfSong = albums.find(
                   (album) => album.id === song.albumId
@@ -33,17 +44,22 @@ const SongsList = ({ playlistSongs, albums = [], removeItem }) => {
                   <ListGroup.Item key={song.id}>
                     <Row>
                       <Col>{song.title}</Col>
-                      <Col xs="auto">
-                        {albumOfSong ? albumOfSong.title : ""}
+                      <Col xs="auto text-muted">
+                        <InfoTooltip content="name of album">
+                          {albumOfSong ? albumOfSong.title : ""}
+                        </InfoTooltip>
                       </Col>
                       <Col xs="auto">
-                        <Icon
-                          icon={deleteIconLight}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            removeItem(song);
-                          }}
-                        />
+                        <InfoTooltip content="delete song from playlist">
+                          <Icon
+                            icon={deleteIconLight}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              removeItem(song);
+                            }}
+                            className="text-link"
+                          />
+                        </InfoTooltip>
                       </Col>
                     </Row>
                   </ListGroup.Item>
@@ -128,9 +144,11 @@ const PlaylistItemWrapper = () => {
           />
           <div className="text-right">
             <Button variant="success" onClick={() => setOpenAdd(!openAdd)}>
+              <Icon icon={addIcon} className="mr-2" />
               Add
             </Button>{" "}
             <Button variant="warning" onClick={() => shuffle(playListSongs)}>
+              <Icon icon={shuffleIcon} className="mr-2" />
               Shuffle songs
             </Button>
           </div>
