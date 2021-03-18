@@ -1,6 +1,6 @@
 import React from "react";
-import { Col, ListGroup, Row } from "react-bootstrap";
 import Icon from "../Icon";
+import { Col, ListGroup, Row } from "react-bootstrap";
 import { emptyIconLight } from "../../constants/icon";
 
 const NoResultsRow = ({ message = "None.", rowClassName = "" }) => (

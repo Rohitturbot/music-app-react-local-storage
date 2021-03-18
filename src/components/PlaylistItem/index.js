@@ -5,16 +5,16 @@ import Icon from "../Icon";
 import InfoTooltip from "../InfoTooltip";
 import NoResultsRow from "../NoResultsRow";
 import useLocalStorage from "../../hooks/useLocalStorage";
-import { Button, Col, ListGroup, Row } from "react-bootstrap";
 import {
   addIcon,
   deleteIconLight,
   musicIcon,
   shuffleIcon,
 } from "../../constants/icon";
+import { BASE_URL } from "../../constants/general";
+import { Button, Col, ListGroup, Row } from "react-bootstrap";
 import { isEmpty } from "lodash";
 import { useParams } from "react-router-dom";
-import { BASE_URL } from "../../constants/general";
 
 const SongsList = ({ playlistSongs, albums = [], removeItem }) => {
   return (

@@ -1,6 +1,6 @@
 import React from "react";
-import { loadingIconLight } from "../../constants/icon";
 import Icon from "../Icon";
+import { loadingIconLight } from "../../constants/icon";
 
 const LoadingIcon = ({ className, fixedWidth = true }) => (
   <Icon

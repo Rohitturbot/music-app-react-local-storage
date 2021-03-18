@@ -32,7 +32,6 @@ class Icon extends React.PureComponent {
     }
 
     if (!icon || (isStringIcon && icon.startsWith("fa-"))) {
-      // Temp until we have all icons in place
       return (
         <FontAwesomeIcon
           className={className}
@@ -47,7 +46,6 @@ class Icon extends React.PureComponent {
     }
 
     if (isStringIcon) {
-      // This has no prefix, so grab the light version of it
       return (
         <FontAwesomeIcon
           className={className}
