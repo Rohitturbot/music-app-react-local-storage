@@ -7,7 +7,11 @@ import moment from "moment";
 import NoResultsRow from "../NoResultsRow";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { Col, ListGroup, Row } from "react-bootstrap";
-import { deleteIconLight, playlistIcon } from "../../constants/icon";
+import {
+  deleteIconLight,
+  durationIcon,
+  playlistIcon,
+} from "../../constants/icon";
 import { isEmpty } from "lodash";
 import { Link } from "react-router-dom";
 
@@ -38,9 +42,15 @@ const PlaylistItems = ({ playlistItems, removeItem }) => {
                       className="text-decoration-none"
                     >
                       <Row>
-                        <Col>{playlistItem.name}</Col>
+                        <Col>
+                          <Icon
+                            icon={playlistIcon}
+                            className="mr-3 text-muted"
+                          />
+                          {playlistItem.name}
+                        </Col>
                         <Col xs="auto text-muted">
-                          Created at:{" "}
+                          <Icon icon={durationIcon} className="mr-2" />
                           {moment(playlistItem.createdAt, "x").format(
                             "DD MMM YYYY hh:mm a"
                           )}

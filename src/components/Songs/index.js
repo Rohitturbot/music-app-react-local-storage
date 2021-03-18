@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from "react";
+import faker from "faker";
 import Header from "../Header";
 import Icon from "../Icon";
 import InfoTooltip from "../InfoTooltip";
 import LoadingIndicatorRow from "../LoadingIndicatorRow";
+import moment from "moment";
 import NoResultsRow from "../NoResultsRow";
 import ReactPaginate from "react-paginate";
 import Search from "../Search";
 import useLocalStorage from "../../hooks/useLocalStorage";
-import { addIcon } from "../../constants/icon";
+import {
+  addIcon,
+  albumIcon,
+  artistIcon,
+  durationIcon,
+  genreIcon,
+} from "../../constants/icon";
 import { BASE_URL, LIMIT } from "../../constants/general";
 import { Card, CardGroup, Col, Row } from "react-bootstrap";
 import { isEmpty } from "lodash";
@@ -35,6 +43,9 @@ const Songs = ({
         <>
           <Row>
             {songs.map((song) => {
+              song.artist = faker.name.findName();
+              song.duration = faker.random.number();
+              song.genre = faker.music.genre();
               const albumOfSong =
                 albums && albums.find((album) => album.id === song.albumId);
               return (
@@ -44,14 +55,29 @@ const Songs = ({
                       <Card.Img variant="top" src={`${song.thumbnailUrl}`} />
                       <Card.Body>
                         <Card.Title>{song.title}</Card.Title>
+                        <h6 className="card-subtitle my-3 text-success">
+                          <Icon icon={artistIcon} className="mr-2" />
+                          {song.artist}
+                        </h6>
+                        <h6 className="card-subtitle mb-3 text-primary">
+                          <Icon icon={durationIcon} className="mr-2" />
+                          {moment(song.duration).format("hh:mm:ss")}
+                        </h6>
+                        <h6 className="card-subtitle text-info">
+                          <Icon icon={genreIcon} className="mr-2" />
+                          {song.genre}
+                        </h6>
                       </Card.Body>
                       <Card.Footer>
                         <Row>
-                          <Col>
-                            <small className="text-muted">
-                              {albumOfSong ? albumOfSong.title : ""}
-                            </small>
-                          </Col>
+                          {albumOfSong && (
+                            <Col>
+                              <small className="text-danger">
+                                <Icon icon={albumIcon} className="mr-2" />
+                                {albumOfSong.title}
+                              </small>
+                            </Col>
+                          )}
                           {onAddItem && (
                             <Col xs="auto">
                               <InfoTooltip content="Add song to your playlist">
@@ -104,6 +130,7 @@ const SongsWrapper = ({ showHeader, onAddItem, searchLimit = LIMIT }) => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
+        console.log("data", data);
         setSongs(data);
       })
       .catch((e) => console.log(e));

@@ -7,7 +7,11 @@ import NoResultsRow from "../NoResultsRow";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import {
   addIcon,
+  albumIcon,
+  artistIcon,
   deleteIconLight,
+  durationIcon,
+  genreIcon,
   musicIcon,
   shuffleIcon,
 } from "../../constants/icon";
@@ -15,6 +19,7 @@ import { BASE_URL } from "../../constants/general";
 import { Button, Col, ListGroup, Row } from "react-bootstrap";
 import { isEmpty } from "lodash";
 import { useParams } from "react-router-dom";
+import moment from "moment";
 
 const SongsList = ({ playlistSongs, albums = [], removeItem }) => {
   return (
@@ -40,14 +45,41 @@ const SongsList = ({ playlistSongs, albums = [], removeItem }) => {
                 const albumOfSong = albums.find(
                   (album) => album.id === song.albumId
                 );
+                const { id, title, duration, artist, genre } = song;
                 return (
-                  <ListGroup.Item key={song.id}>
+                  <ListGroup.Item key={id}>
                     <Row>
-                      <Col>{song.title}</Col>
-                      <Col xs="auto text-muted">
+                      <Col>
+                        <div className="text-danger">
+                          <Icon icon={musicIcon} className="mr-2 text-muted" />
+                          {title}
+                        </div>
+                      </Col>
+                      <Col className="text-primary">
+                        {duration && (
+                          <div className=" text-primary">
+                            <Icon icon={durationIcon} className="mr-2" />
+                            {moment(duration).format("hh:mm:ss")}
+                          </div>
+                        )}
+                        {artist && (
+                          <div className=" text-success">
+                            <Icon icon={artistIcon} className="mr-2" />
+                            {artist}
+                          </div>
+                        )}
+                      </Col>
+                      <Col xs="auto text-warning">
                         <InfoTooltip content="name of album">
+                          <Icon icon={albumIcon} className="mr-2" />
                           {albumOfSong ? albumOfSong.title : ""}
                         </InfoTooltip>
+                        {genre && (
+                          <div className=" text-info">
+                            <Icon icon={genreIcon} className="mr-2" />
+                            {genre}
+                          </div>
+                        )}
                       </Col>
                       <Col xs="auto">
                         <InfoTooltip content="delete song from playlist">
