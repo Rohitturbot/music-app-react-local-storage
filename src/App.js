@@ -7,13 +7,13 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Container, Nav, Navbar } from "react-bootstrap";
 
 const App = () => {
-  usePageTitle("Visual BI Music App");
+  usePageTitle("Music App");
 
   return (
     <Container>
       <BrowserRouter>
         <Navbar bg="primary" variant="dark" expand="lg">
-          <Navbar.Brand href="/songs">Visual BI Music App</Navbar.Brand>
+          <Navbar.Brand href="/songs">Music App</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
